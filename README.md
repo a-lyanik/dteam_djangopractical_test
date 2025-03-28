@@ -93,7 +93,7 @@ Currently the default data fixtures are stored in `cvproject/main/cvinstance_fix
 
 You can run them with:
   ```bash
-  python manage.py loaddata cvinstance_fixstures.json
+  python manage.py loaddata cvinstance_fixtures.json
   ```
 
 ## Running Tests (Task.1.6)

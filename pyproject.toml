@@ -10,7 +10,9 @@ requires-python = "3.13.2"
 dependencies = [
     "django (==5.1.7)",
     "flake8 (>=7.1.2,<8.0.0)",
-    "weasyprint (>=65.0,<66.0)"
+    "weasyprint (>=65.0,<66.0)",
+    "djangorestframework (>=3.16.0,<4.0.0)",
+    "drf-spectacular (>=0.28.0,<0.29.0)"
 ]
 
 

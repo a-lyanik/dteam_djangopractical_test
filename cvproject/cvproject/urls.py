@@ -16,8 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
+from drf_spectacular.views import (
+    SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView)
+
 from main.views import (
     CVInstanceListView, CVInstanceDetailView, generate_cv_pdf)
+from main.api_views import (
+    CVInstanceAPIView, CVInstanceDetailedAPIView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +34,16 @@ urlpatterns = [
         name="cvinstance-detail"
     ),
     path("cv/<int:pk>/download-pdf/", generate_cv_pdf, name="cv-pdf"),
+    path('api/cvs/', CVInstanceAPIView.as_view(),
+         name='api-cvinstance-list'),
+    path('api/cvs/<int:pk>/', CVInstanceDetailedAPIView.as_view(),
+         name='api-cvinstance-detail'),
+    # Generate API schema
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Swagger UI (interactive API documentation)
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'),
+         name='swagger-ui'),
+    # Redoc UI (alternative API documentation)
+    path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'),
+         name='redoc'),
 ]
