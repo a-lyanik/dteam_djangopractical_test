@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 2em;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <header>Settings</header>
+    <div class="container">
+        <h2>Django Settings</h2>
+        <table>
+            <tr>
+                <th>Setting</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>DEBUG</td>
+                <td>{{ settings.DEBUG }}</td>
+            </tr>
+            <tr>
+                <td>Allowed Hosts</td>
+                <td>{{ settings.ALLOWED_HOSTS }}</td>
+            </tr>
+            <tr>
+                <td>Database Engine</td>
+                <td>{{ settings.DATABASES.default.ENGINE }}</td>
+            </tr>
+            <tr>
+                <td>Installed Apps</td>
+                <td>
+                    <ul>
+                        {% for app in settings.INSTALLED_APPS %}
+                            <li>{{ app }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <a href="{% url 'cvinstance-list' %}" style="background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">Back to CV List</a>
+    </div>
+</body>
+</html>

@@ -22,7 +22,7 @@ from drf_spectacular.views import (
 
 from main.views import (
     CVInstanceListView, CVInstanceDetailView,
-    generate_cv_pdf, request_log_list,
+    generate_cv_pdf, request_log_list, settings_view
 )
 from main.api_views import (
     CVInstanceAPIView, CVInstanceDetailedAPIView)
@@ -49,4 +49,5 @@ urlpatterns = [
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'),
          name='redoc'),
     path("requests/", request_log_list, name="request-log-list"),
+    path("settings/", settings_view, name="settings"),
 ]

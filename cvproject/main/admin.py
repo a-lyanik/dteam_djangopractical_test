@@ -12,6 +12,7 @@ class CVInstanceAdmin(admin.ModelAdmin):
     )
     list_filter = ('firstname', 'lastname',)
 
+
 class RequestLogAdmin(admin.ModelAdmin):
     """
     Request LogA admin class

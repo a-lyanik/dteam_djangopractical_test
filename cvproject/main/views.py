@@ -54,3 +54,10 @@ def request_log_list(request):
         "main/request_log_list.html",
         {"logs": logs}
     )
+
+
+def settings_view(request):
+    """
+    View to display selected Django settings using the context processor.
+    """
+    return render(request, "main/settings.html")
