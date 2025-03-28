@@ -1,0 +1,42 @@
+[
+  {
+    "model": "main.cvinstance",
+    "pk": 1,
+    "fields": {
+      "firstname": "John",
+      "lastname": "McClane",
+      "skills": [
+        "Gunslinger",
+        "Barefoot runner"
+      ],
+      "projects": [
+        "Die Hard",
+        "Die Hard 2"
+      ],
+      "bio": "John McClane was born on May 23, 1955 in Plainfield, New Jersey. His father was an Irish-American cop who made service in New Jersey and his mother was a house cleaner. In his youth, John attended a catholic school. His parents died as he was growing up. From 1972 - 1975, John served in the United States Marine Corps during the Vietnam War, where he served as a tunnel rat, and rose to the rank of sergeant.",
+      "contacts": {
+        "Email": "JohnMcClane@bing.com",
+        "Phone": "911"
+      }
+    }
+  },
+  {
+    "model": "main.cvinstance",
+    "pk": 2,
+    "fields": {
+      "firstname": "Hans",
+      "lastname": "Gruber",
+      "skills": [
+        "Leadership",
+        "Bilingual"
+      ],
+      "projects": [
+        "Nakatomi Plaza Heist"
+      ],
+      "bio": "Not much is known about Hans Gruber's early life except that he enjoyed making models in his youth. He also claimed to have received a classical education; that claim being bolstered by an intellectual remark about Alexander the Great.",
+      "contacts": {
+        "Email": "HansGruber@yahoo.com"
+      }
+    }
+  }
+]

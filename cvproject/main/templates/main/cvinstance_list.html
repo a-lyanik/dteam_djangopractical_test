@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV List</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 2em;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h2 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .cv-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin-top: 20px;
+        }
+        .cv-list li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+        .cv-list li:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .cv-list a {
+            text-decoration: none;
+            color: #333;
+            font-size: 1.5em;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .cv-list a:hover {
+            color: #4CAF50;
+        }
+        .no-cvs {
+            font-size: 1.2em;
+            color: #777;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        CV List
+    </header>
+
+    <div class="container">
+        {% block content %}
+        <h2>CV List</h2>
+
+        {% if object_list %}
+            <ul class="cv-list">
+                {% for cv in object_list %}
+                    <li>
+                        <a href="{% url 'cvinstance-detail' pk=cv.id %}">
+                            "{{ cv.firstname }} {{ cv.lastname }}"
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-cvs">There are no CVs in the database.</p>
+        {% endif %}
+        {% endblock %}
+    </div>
+</body>
+</html>
+

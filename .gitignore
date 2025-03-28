@@ -1,0 +1,34 @@
+ Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# virtualenv
+venv/
+env/
+ENV/
+.venv/
+
+# DotEnv config
+.env
+
+# IDE project folders
+.idea/
+.vscode/
+
+# tmp files
+*.pid
+tmp/
+.DS_Store
+test_db
+db.sqlite3
+
+# static dir
+static_collected/
+
+# media dir
+media/
+
+# logs
+logs/
+old/
