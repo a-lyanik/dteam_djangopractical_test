@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from main.views import CVInstanceListView, CVInstanceDetailView
+from main.views import (
+    CVInstanceListView, CVInstanceDetailView, generate_cv_pdf)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +27,5 @@ urlpatterns = [
         CVInstanceDetailView.as_view(),
         name="cvinstance-detail"
     ),
+    path("cv/<int:pk>/download-pdf/", generate_cv_pdf, name="cv-pdf"),
 ]

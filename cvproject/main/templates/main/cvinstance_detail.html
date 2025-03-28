@@ -108,8 +108,12 @@
                 {% endfor %}
             </ul>
         </div>
-
-        <a href="{% url 'cvinstance-list' %}">Back to List</a>
+        {% if not pdf_mode %}
+        <div class="button-container">
+            <a href="{% url 'cv-pdf' pk=object.id %}" class="download-btn">Download as PDF</a>
+            <a href="{% url 'cvinstance-list' %}">Back to List</a>
+        </div>
+        {% endif %}
     </div>
 </body>
 </html>

@@ -13,12 +13,3 @@ class CVInstance(models.Model):
     projects = models.JSONField()
     bio = models.TextField()
     contacts = models.JSONField()
-
-    def validate_skills(self, skills):
-        pass
-
-    def validate_projects(self, skills):
-        pass
-
-    def validate_contacts(self, skills):
-        pass
