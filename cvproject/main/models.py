@@ -32,3 +32,9 @@ class CVInstance(models.Model):
     projects = models.JSONField(validators=[validate_list_of_strings])
     bio = models.TextField()
     contacts = models.JSONField(validators=[validate_dict_of_strings])
+
+
+class RequestLog(models.Model):
+    http_method = models.CharField(null=False, blank=False, max_length=10)
+    path = models.CharField(null=False, blank=False, max_length=260)
+    timestamp = models.DateTimeField(auto_now_add=True)

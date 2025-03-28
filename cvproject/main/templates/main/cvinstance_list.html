@@ -61,6 +61,21 @@
             text-align: center;
             margin-top: 50px;
         }
+        .log-btn {
+        display: inline-block;
+        margin-bottom: 20px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        }
+        .log-btn:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -69,6 +84,7 @@
     </header>
 
     <div class="container">
+        <a href="{% url 'request-log-list' %}" class="log-btn">View Request Log</a>
         {% block content %}
         <h2>CV List</h2>
 

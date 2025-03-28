@@ -1,12 +1,12 @@
 from django.http import HttpResponse
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.template.loader import get_template
 
 from weasyprint import HTML
 
-from .models import CVInstance
+from .models import CVInstance, RequestLog
 
 
 class CVInstanceDetailView(DetailView):
@@ -43,3 +43,14 @@ def generate_cv_pdf(request, pk):
         f'attachment; filename="{cv.firstname}_{cv.lastname}_CV.pdf"'
 
     return response
+
+
+def request_log_list(request):
+    """View to display the last 10 logged requests."""
+    logs = RequestLog.objects.values(
+        "http_method", "path", "timestamp").order_by("-timestamp")[:10]
+    return render(
+        request,
+        "main/request_log_list.html",
+        {"logs": logs}
+    )
