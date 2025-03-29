@@ -22,7 +22,7 @@ from drf_spectacular.views import (
 
 from main.views import (
     CVInstanceListView, CVInstanceDetailView,
-    generate_cv_pdf, request_log_list, settings_view
+    generate_cv_pdf, request_log_list, settings_view, send_cv_email_view
 )
 from main.api_views import (
     CVInstanceAPIView, CVInstanceDetailedAPIView)
@@ -36,18 +36,32 @@ urlpatterns = [
         name="cvinstance-detail"
     ),
     path("cv/<int:pk>/download-pdf/", generate_cv_pdf, name="cv-pdf"),
-    path('api/cvs/', CVInstanceAPIView.as_view(),
-         name='api-cvinstance-list'),
-    path('api/cvs/<int:pk>/', CVInstanceDetailedAPIView.as_view(),
-         name='api-cvinstance-detail'),
+    path(
+        'api/cvs/',
+        CVInstanceAPIView.as_view(),
+        name='api-cvinstance-list',
+    ),
+    path(
+        'api/cvs/<int:pk>/',
+        CVInstanceDetailedAPIView.as_view(),
+         name='api-cvinstance-detail',
+    ),
     # Generate API schema
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Swagger UI (interactive API documentation)
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'),
-         name='swagger-ui'),
+    path(
+        'api/docs/',
+        SpectacularSwaggerView.as_view(url_name='schema'),
+        name='swagger-ui',
+    ),
     # Redoc UI (alternative API documentation)
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'),
          name='redoc'),
     path("requests/", request_log_list, name="request-log-list"),
     path("settings/", settings_view, name="settings"),
+    path(
+        "send-cv-email/<int:pk>/",
+        send_cv_email_view,
+        name="send-cv-email",
+    ),
 ]

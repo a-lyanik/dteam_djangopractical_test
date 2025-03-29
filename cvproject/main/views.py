@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+import json
+from django.http import HttpResponse, JsonResponse
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404, render
@@ -7,7 +8,7 @@ from django.template.loader import get_template
 from weasyprint import HTML
 
 from .models import CVInstance, RequestLog
-
+from .tasks import send_cv_email
 
 class CVInstanceDetailView(DetailView):
     """
@@ -61,3 +62,20 @@ def settings_view(request):
     View to display selected Django settings using the context processor.
     """
     return render(request, "main/settings.html")
+
+
+def send_cv_email_view(request, pk):
+    """
+    View to send a CV pdf email
+    """
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            email = data.get("email")
+            if not email:
+                return JsonResponse({"message": "Invalid email"}, status=400)
+
+            send_cv_email.delay(pk, email)  # Call Celery task
+            return JsonResponse({"message": "Email is being sent."})
+        except Exception as e:
+            return JsonResponse({"message": "Error occurred"}, status=500)

@@ -47,9 +47,12 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        a {
-            display: inline-block;
+        .button-container {
             margin-top: 30px;
+            display: flex;
+            gap: 10px;
+        }
+        .download-btn, .send-email-btn {
             background-color: #4CAF50;
             color: white;
             padding: 12px 24px;
@@ -58,16 +61,22 @@
             text-align: center;
             font-weight: bold;
             transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
         }
-        a:hover {
+        .download-btn:hover, .send-email-btn:hover {
             background-color: #45a049;
         }
-        .section {
-            margin-bottom: 30px;
+        input[type="email"] {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        .bio {
-            font-size: 1.2em;
-            line-height: 1.6;
+        .message {
+            margin-top: 10px;
+            font-size: 1.1em;
+            color: green;
         }
     </style>
 </head>
@@ -108,12 +117,52 @@
                 {% endfor %}
             </ul>
         </div>
+
         {% if not pdf_mode %}
         <div class="button-container">
             <a href="{% url 'cv-pdf' pk=object.id %}" class="download-btn">Download as PDF</a>
-            <a href="{% url 'cvinstance-list' %}">Back to List</a>
+            <a href="{% url 'cvinstance-list' %}" class="download-btn">Back to List</a>
+        </div>
+
+        <!-- Email Form -->
+        <div class="email-form">
+            <h3>Send PDF to Email</h3>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <button class="send-email-btn" onclick="sendPdf()">Send PDF</button>
+            <p class="message" id="message"></p>
         </div>
         {% endif %}
     </div>
+
+    <script>
+        function sendPdf() {
+            let email = document.getElementById("email").value;
+            let messageBox = document.getElementById("message");
+
+            if (!email) {
+                messageBox.innerHTML = "Please enter a valid email.";
+                messageBox.style.color = "red";
+                return;
+            }
+
+            fetch("{% url 'send-cv-email' pk=object.id %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageBox.innerHTML = data.message;
+                messageBox.style.color = "green";
+            })
+            .catch(error => {
+                messageBox.innerHTML = "Error sending email. Please try again.";
+                messageBox.style.color = "red";
+            });
+        }
+    </script>
 </body>
 </html>
