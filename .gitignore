@@ -28,6 +28,8 @@ static_collected/
 
 # media dir
 media/
+static/
+cvproject/static/
 
 # logs
 logs/

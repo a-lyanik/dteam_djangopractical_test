@@ -228,4 +228,4 @@ class RequestLogViewTests(TestCase):
         # Check that the latest logs are included (reverse order)
         latest_log_path = "/test-path-11/"
         # We check the [1] because [0] will be `requests`
-        self.assertEqual(logs[1].path, latest_log_path)
+        self.assertEqual(logs[1].get("path"), latest_log_path)
