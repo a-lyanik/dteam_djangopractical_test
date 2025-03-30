@@ -22,7 +22,8 @@ from drf_spectacular.views import (
 
 from main.views import (
     CVInstanceListView, CVInstanceDetailView,
-    generate_cv_pdf, request_log_list, settings_view, send_cv_email_view
+    generate_cv_pdf, request_log_list,
+    settings_view, send_cv_email_view, translate_cv,
 )
 from main.api_views import (
     CVInstanceAPIView, CVInstanceDetailedAPIView)
@@ -44,7 +45,7 @@ urlpatterns = [
     path(
         'api/cvs/<int:pk>/',
         CVInstanceDetailedAPIView.as_view(),
-         name='api-cvinstance-detail',
+        name='api-cvinstance-detail',
     ),
     # Generate API schema
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
@@ -64,4 +65,5 @@ urlpatterns = [
         send_cv_email_view,
         name="send-cv-email",
     ),
+    path('cv/<int:pk>/translate/', translate_cv, name='translate-cv'),
 ]

@@ -52,7 +52,7 @@
             display: flex;
             gap: 10px;
         }
-        .download-btn, .send-email-btn {
+        .button {
             background-color: #4CAF50;
             color: white;
             padding: 12px 24px;
@@ -64,8 +64,13 @@
             border: none;
             cursor: pointer;
         }
-        .download-btn:hover, .send-email-btn:hover {
+        .button:hover {
             background-color: #45a049;
+        }
+        select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
         input[type="email"] {
             padding: 10px;
@@ -120,15 +125,35 @@
 
         {% if not pdf_mode %}
         <div class="button-container">
-            <a href="{% url 'cv-pdf' pk=object.id %}" class="download-btn">Download as PDF</a>
-            <a href="{% url 'cvinstance-list' %}" class="download-btn">Back to List</a>
+            <a href="{% url 'cv-pdf' pk=object.id %}" class="button">Download as PDF</a>
+            <select id="language-selector">
+                <option value="Cornish">Cornish</option>
+                <option value="Manx">Manx</option>
+                <option value="Breton">Breton</option>
+                <option value="Inuktitut">Inuktitut</option>
+                <option value="Kalaallisut">Kalaallisut</option>
+                <option value="Romani">Romani</option>
+                <option value="Occitan">Occitan</option>
+                <option value="Ladino">Ladino</option>
+                <option value="Northern Sami">Northern Sami</option>
+                <option value="Upper Sorbian">Upper Sorbian</option>
+                <option value="Kashubian">Kashubian</option>
+                <option value="Zazaki">Zazaki</option>
+                <option value="Chuvash">Chuvash</option>
+                <option value="Livonian">Livonian</option>
+                <option value="Tsakonian">Tsakonian</option>
+                <option value="Saramaccan">Saramaccan</option>
+                <option value="Bislama">Bislama</option>
+            </select>
+            <button class="button" onclick="translateContent()">Translate</button>
+            <a href="{% url 'cvinstance-list' %}" class="button">Back to List</a>
         </div>
 
         <!-- Email Form -->
         <div class="email-form">
             <h3>Send PDF to Email</h3>
             <input type="email" id="email" placeholder="Enter your email" required>
-            <button class="send-email-btn" onclick="sendPdf()">Send PDF</button>
+            <button class="button" onclick="sendPdf()">Send PDF</button>
             <p class="message" id="message"></p>
         </div>
         {% endif %}
@@ -147,6 +172,7 @@
 
             // Simple email validation
             let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
             if (!emailPattern.test(email)) {
                 messageBox.innerHTML = "Please enter a valid email.";
                 messageBox.style.color = "red";
@@ -170,6 +196,57 @@
             .catch(error => {
                 messageBox.innerHTML = "Error sending email. Please try again.";
                 messageBox.style.color = "red";
+            });
+        }
+        function translateContent() {
+            let language = document.getElementById("language-selector").value;
+
+            fetch("{% url 'translate-cv' pk=object.id %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({ language: language })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.translated_text) {
+                    let translatedData = data.translated_text;
+                    console.log("translatedData")
+                    console.log(translatedData)
+
+                    document.querySelector(".bio").innerHTML = `<strong>Bio:</strong> ${translatedData.bio}`;
+
+                    let skillsList = document.querySelector(".section:nth-of-type(2) ul");
+                    skillsList.innerHTML = "";
+                    translatedData.skills.forEach(skill => {
+                        let li = document.createElement("li");
+                        li.textContent = skill;
+                        skillsList.appendChild(li);
+                    });
+
+                    let projectsList = document.querySelector(".section:nth-of-type(3) ul");
+                    projectsList.innerHTML = "";
+                    translatedData.projects.forEach(project => {
+                        let li = document.createElement("li");
+                        li.textContent = project;
+                        projectsList.appendChild(li);
+                    });
+
+                    let contactsList = document.querySelector(".section:nth-of-type(4) ul");
+                    contactsList.innerHTML = "";
+                    Object.entries(translatedData.contacts).forEach(([contactType, contact]) => {
+                        let li = document.createElement("li");
+                        li.innerHTML = `<strong>${contactType}:</strong> ${contact}`;
+                        contactsList.appendChild(li);
+                    });
+                } else {
+                    alert("Translation failed. Please try again.");
+                }
+            })
+            .catch(error => {
+                alert("Error: " + error);
             });
         }
     </script>

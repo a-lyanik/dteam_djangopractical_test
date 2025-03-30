@@ -10,7 +10,7 @@ class CVInstanceAdmin(admin.ModelAdmin):
         'id', 'firstname', 'lastname', 'skills',
         'bio', 'projects', 'contacts',
     )
-    list_filter = ('firstname', 'lastname',)
+    list_filter = ('firstname', 'lastname')
 
 
 class RequestLogAdmin(admin.ModelAdmin):
@@ -20,7 +20,7 @@ class RequestLogAdmin(admin.ModelAdmin):
     list_display = (
         'id', 'http_method', 'path', 'timestamp',
     )
-    list_filter = ('http_method', 'timestamp',)
+    list_filter = ('http_method', 'timestamp')
 
 
 admin.site.register(models.CVInstance, CVInstanceAdmin)

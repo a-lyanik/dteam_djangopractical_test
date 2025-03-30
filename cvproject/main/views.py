@@ -9,6 +9,8 @@ from weasyprint import HTML
 
 from .models import CVInstance, RequestLog
 from .tasks import send_cv_email
+from .utils import translate_text
+
 
 class CVInstanceDetailView(DetailView):
     """
@@ -79,3 +81,12 @@ def send_cv_email_view(request, pk):
             return JsonResponse({"message": "Email is being sent."})
         except Exception as e:
             return JsonResponse({"message": "Error occurred"}, status=500)
+
+
+def translate_cv(request, pk):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        target_language = data.get("language")
+        translated_text = translate_text(pk, target_language)
+        return JsonResponse({"translated_text": translated_text})
+    return JsonResponse({"error": "Invalid request"}, status=400)

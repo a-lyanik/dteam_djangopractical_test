@@ -116,6 +116,8 @@ CELERY_TASK_SERIALIZER = "json"
 MAILTRAP_URL = os.getenv('MAILTRAP_URL')
 MAILTRAP_KEY = os.getenv('MAILTRAP_KEY')
 
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
