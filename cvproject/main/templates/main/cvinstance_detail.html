@@ -140,6 +140,14 @@
             let messageBox = document.getElementById("message");
 
             if (!email) {
+                messageBox.innerHTML = "Please enter an email.";
+                messageBox.style.color = "red";
+                return;
+            }
+
+            // Simple email validation
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
                 messageBox.innerHTML = "Please enter a valid email.";
                 messageBox.style.color = "red";
                 return;
@@ -157,6 +165,7 @@
             .then(data => {
                 messageBox.innerHTML = data.message;
                 messageBox.style.color = "green";
+                document.getElementById("email").value = "";
             })
             .catch(error => {
                 messageBox.innerHTML = "Error sending email. Please try again.";
