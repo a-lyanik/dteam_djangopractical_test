@@ -112,5 +112,5 @@ Run the following command to execute all test cases in this project:
 
 When using docker:
   ```bash
-  docker-compose exec web python cvproject/manage.py loaddata test main
+  docker-compose exec web python cvproject/manage.py test main
    ```
