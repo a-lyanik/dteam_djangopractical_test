@@ -96,6 +96,10 @@ You can run them with:
   python manage.py loaddata cvinstance_fixtures.json
   ```
 
+When using docker:
+  ```bash
+  docker-compose exec web python cvproject/manage.py loaddata cvproject/cvinstance_fixtures.json
+   ```
 ## Running Tests (Task.1.6)
 
 Django provides a built-in testing framework that is based on Python's `unittest` module. You can use it to test your views, models, forms, etc.
@@ -105,3 +109,8 @@ Run the following command to execute all test cases in this project:
   ```bash
   python manage.py test
   ```
+
+When using docker:
+  ```bash
+  docker-compose exec web python cvproject/manage.py loaddata test main
+   ```

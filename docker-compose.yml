@@ -4,10 +4,10 @@ services:
   web:
     build: .
     container_name: django_app
-    command: python cvproject/manage.py runserver 0.0.0.0:8000
+#    command: python cvproject/manage.py runserver 0.0.0.0:8000
 #    I know I know, but well need it in a few tasks
-#    command: sh -c "cd cvproject/ &&
-#                gunicorn cvproject.wsgi:application --bind 0.0.0.0:8000"
+    command: sh -c "cd cvproject/ &&
+                gunicorn cvproject.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
