@@ -211,38 +211,42 @@
             })
             .then(response => response.json())
             .then(data => {
-                if (data.translated_text) {
-                    let translatedData = data.translated_text;
-                    console.log("translatedData")
-                    console.log(translatedData)
-
-                    document.querySelector(".bio").innerHTML = `<strong>Bio:</strong> ${translatedData.bio}`;
-
-                    let skillsList = document.querySelector(".section:nth-of-type(2) ul");
-                    skillsList.innerHTML = "";
-                    translatedData.skills.forEach(skill => {
-                        let li = document.createElement("li");
-                        li.textContent = skill;
-                        skillsList.appendChild(li);
-                    });
-
-                    let projectsList = document.querySelector(".section:nth-of-type(3) ul");
-                    projectsList.innerHTML = "";
-                    translatedData.projects.forEach(project => {
-                        let li = document.createElement("li");
-                        li.textContent = project;
-                        projectsList.appendChild(li);
-                    });
-
-                    let contactsList = document.querySelector(".section:nth-of-type(4) ul");
-                    contactsList.innerHTML = "";
-                    Object.entries(translatedData.contacts).forEach(([contactType, contact]) => {
-                        let li = document.createElement("li");
-                        li.innerHTML = `<strong>${contactType}:</strong> ${contact}`;
-                        contactsList.appendChild(li);
-                    });
+                if (data.translated_text.error){
+                    alert(data.translated_text.error);
                 } else {
-                    alert("Translation failed. Please try again.");
+                    if (data.translated_text) {
+                        let translatedData = data.translated_text;
+                        console.log("translatedData")
+                        console.log(translatedData)
+
+                        document.querySelector(".bio").innerHTML = `<strong>Bio:</strong> ${translatedData.bio}`;
+
+                        let skillsList = document.querySelector(".section:nth-of-type(2) ul");
+                        skillsList.innerHTML = "";
+                        translatedData.skills.forEach(skill => {
+                            let li = document.createElement("li");
+                            li.textContent = skill;
+                            skillsList.appendChild(li);
+                        });
+
+                        let projectsList = document.querySelector(".section:nth-of-type(3) ul");
+                        projectsList.innerHTML = "";
+                        translatedData.projects.forEach(project => {
+                            let li = document.createElement("li");
+                            li.textContent = project;
+                            projectsList.appendChild(li);
+                        });
+
+                        let contactsList = document.querySelector(".section:nth-of-type(4) ul");
+                        contactsList.innerHTML = "";
+                        Object.entries(translatedData.contacts).forEach(([contactType, contact]) => {
+                            let li = document.createElement("li");
+                            li.innerHTML = `<strong>${contactType}:</strong> ${contact}`;
+                            contactsList.appendChild(li);
+                        });
+                    } else {
+                        alert("Translation failed. Please try again.");
+                    }
                 }
             })
             .catch(error => {

@@ -23,13 +23,24 @@ def translate_text(cv_id: int, language: str):
             {
                 'role': 'system',
                 'content':
-                    'Translate the following CV content into ' + language,
+                    'Translate the following CV content into '  + language +
+                    '(Prioritise to translate even if approximate '
+                    'and with some original words! '
+                    'If you cant - say why you cant translate '
+                    'to that language exactly!). '
+                    'Return either the json or the reason why you cant. '
+                    'Don\'t ask questions.',
             },
             {'role': 'user', 'content': cv_json},
         ]
     )
 
     translated_cv = response.choices[0].message.content
-    translated_cv = json.loads(translated_cv)
+
+    # Sometimes gpt cant translate we can show the user why.
+    try:
+        translated_cv = json.loads(translated_cv)
+    except ValueError as e:
+        translated_cv = {"error": response.choices[0].message.content}
 
     return translated_cv
